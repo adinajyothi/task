@@ -1,0 +1,76 @@
+# ----------------------------
+# Recipe Book Program
+# ----------------------------
+
+class RecipeBook:
+    def __init__(self):
+        self.recipes = {}
+
+    def add_recipe(self, name, ingredients, steps):
+        self.recipes[name.lower()] = {
+            "ingredients": ingredients,
+            "steps": steps
+        }
+        print(f"✅ Recipe '{name}' added!\n")
+
+    def view_recipes(self):
+        if not self.recipes:
+            print("No recipes yet. Add some!\n")
+            return
+        print("📖 Your Recipes:")
+        for name in self.recipes:
+            print(f" - {name.title()}")
+        print()
+
+    def search_recipe(self, name):
+        recipe = self.recipes.get(name.lower())
+        if recipe:
+            print(f"🍴 {name.title()} Recipe")
+            print("Ingredients:")
+            for i in recipe["ingredients"]:
+                print(f" - {i}")
+            print("Steps:")
+            for s in recipe["steps"]:
+                print(f" - {s}")
+            print()
+        else:
+            print(f"❌ Recipe '{name}' not found.\n")
+
+
+# ----------------------------
+# Example Usage
+# ----------------------------
+def main():
+    book = RecipeBook()
+
+    while True:
+        print("=== Recipe Book Menu ===")
+        print("1. Add Recipe")
+        print("2. View All Recipes")
+        print("3. Search Recipe")
+        print("4. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            name = input("Recipe name: ")
+            ingredients = input("Enter ingredients (comma separated): ").split(",")
+            steps = input("Enter steps (comma separated): ").split(",")
+            book.add_recipe(name.strip(), [i.strip() for i in ingredients], [s.strip() for s in steps])
+
+        elif choice == "2":
+            book.view_recipes()
+
+        elif choice == "3":
+            name = input("Enter recipe name to search: ")
+            book.search_recipe(name.strip())
+
+        elif choice == "4":
+            print("👋 Exiting Recipe Book. Goodbye!")
+            break
+        else:
+            print("Invalid option. Try again.\n")
+
+
+if __name__ == "__main__":
+    main()
